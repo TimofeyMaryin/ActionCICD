@@ -1,0 +1,27 @@
+name: AndroidBuild
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3.13.0
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload a Build Artifact
+        uses : actions/update-artifacts@v3.1.3
+        with:
+          name: app-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab
